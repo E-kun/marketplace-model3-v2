@@ -3,6 +3,7 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const ejsMate = require('ejs-mate');
+const methodOverride = require('method-override');
 const flash = require('connect-flash');
 const dotenv = require("dotenv");
 dotenv.config();
@@ -26,6 +27,7 @@ app.set('view engine', 'ejs');
 app.engine('ejs', ejsMate);
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static('public'));
+app.use(methodOverride('_method'));
 // app.use(flash());
 
 // app.use((req, res, next) => {

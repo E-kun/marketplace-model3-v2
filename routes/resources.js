@@ -11,10 +11,14 @@ const upload = multer(storage);
 router.route('/')
     .get(catchAsync(resources.catalogue))
     // .post(isLoggedIn, catchAsync(resources.createResouce));
-    .post(isLoggedIn, upload.fields([
-            { name: 'image' },
-            { name: 'material', maxCount: 1 }
-            ]), catchAsync(resources.createResouce));
+    .post(upload.fields([
+        { name: 'image' },
+        { name: 'material', maxCount: 1 }
+        ]), catchAsync(resources.createResouce));
+    // .post(isLoggedIn, upload.fields([
+    //         { name: 'image' },
+    //         { name: 'material', maxCount: 1 }
+    //         ]), catchAsync(resources.createResouce));
     // .post(upload.fields([
     //         { name: 'image' },
     //         { name: 'material', maxCount: 1 }
