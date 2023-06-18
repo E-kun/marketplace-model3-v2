@@ -18,6 +18,7 @@ module.exports.catalogue = async (req, res) => {
                 resources = result.rows;
                 res.render('resources/catalogue', { resources, subject });
             });
+            client.release();
             // Don't return query result or the page load will slow down.
             // const resources = await Resource.find({ subject })
             // res.render('resources/catalogue', { resources, subject });
@@ -31,15 +32,14 @@ module.exports.catalogue = async (req, res) => {
                 resources = result.rows;
                 res.render('resources/catalogue', { resources, subject: 'All' });
             });
+            client.release();
             // const resources = await Resource.find({})
         }
     } catch(err){
         console.log(err);
         // req.flash('error', 'An error has occurred. Unable to locate resources.');
         res.redirect('/catalogue');
-    } finally {
-        client.release();
-    }
+    } 
 }
 
 module.exports.createResouce = async (req, res, next) => {
