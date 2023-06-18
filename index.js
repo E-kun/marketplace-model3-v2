@@ -4,14 +4,18 @@ const app = express();
 const path = require('path');
 const ejsMate = require('ejs-mate');
 const flash = require('connect-flash');
-
 const dotenv = require("dotenv");
 dotenv.config();
 
 //Local file definition references
-const { dbConnect, pgConnect, mongoClient, pgPool } = require('./utils/db-connect');
 const port = process.env.WEBAPPPORT;
+const { dbConnect, pgConnect, mongoClient, pgPool } = require('./utils/db-connect');
 const ExpressError = require('./utils/ExpressError');
+
+//Route files
+// const resourceRoutes = require('./routes/resources');
+const userRoutes = require('./routes/users');
+// const cartRoutes = require('./routes/cart');
 
 //Schema model files
 const User = require('./models/user');
@@ -35,6 +39,9 @@ app.use(express.static('public'));
 
 dbConnect().catch(console.dir);
 pgConnect();
+
+//Express is using defined routes inside respective router objects.
+app.use('/', userRoutes);
 
 app.get('/', async (req, res) => {
     res.render('home');
