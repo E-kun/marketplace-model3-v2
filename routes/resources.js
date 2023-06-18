@@ -35,7 +35,7 @@ router.route('/:id')
     // .delete(isLoggedIn, catchAsync(resources.deleteResource));
     .delete(catchAsync(resources.deleteResource));
 
-router.get('/:id/edit', isLoggedIn, catchAsync(resources.renderEditForm));
-// router.get('/:id/edit', catchAsync(resources.renderEditForm));
+// router.get('/:id/edit', isLoggedIn, catchAsync(resources.renderEditForm));
+router.get('/:id/edit', catchAsync(resources.renderEditForm));
 
 module.exports = router;
