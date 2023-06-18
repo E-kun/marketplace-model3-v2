@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MERCATUS</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    
+    <link rel="stylesheet" href="/css/navbar.css">
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src='/js/complete.js' defer></script>
+</head>
+
+<body class="d-flex flex-column vh-100">
+    <%- include('../partials/navbar') %> 
+    <main class="container mt-5">
+        <%- include('../partials/flash') %>  
+        <div class="row">
+            <div class="col-sm-6 col-md-4 col-md-offset-4 col-sm-offset-3 ">
+                <h1>Thanks for your order! Your payment has been processed successfully.</h1>                
+                <p>Details of your purchase are as below:</p>
+
+                <pre id="payment-intent"></pre>
+            </div>
+        </div>
+    </main>
+    <%- include('../partials/footer') %> 
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src='/js/validateForms.js'></script>   
+</body>
+
+</html>
+

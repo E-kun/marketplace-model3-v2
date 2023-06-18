@@ -1,0 +1,30 @@
+<% layout('layouts/boilerplate')%>
+<div class="row">
+    <div class="card mb-3 mx-auto col-8">
+        <br>
+        <h3 class="d-flex justify-content-center">Please review your order and ensure that the following items are correct. You will not be able to go change your order past this point.</h3>
+        <br>
+        <ul class="list-group d-flex justify-content-between">
+            <% for(let resource of resources){ %> 
+            <li class="list-group-item d-flex justify-content-evenly">
+                <strong><%=resource.name %></strong>
+                <span class="label label-success">Each Item: $<%=resource.price %></span>
+                <span class="badge bg-primary">Qty: <%=resource.qty %> </span>
+                <span class="label label-success">Item Subtotal: $<%=resource.subtotal %></span>
+            </li>
+            <% } %> 
+        </ul>
+        <div class="row">
+            <div class="mb-3 mx-auto col-8 ms-auto">
+                <strong>Total: $<%=totalPrice %></strong>
+            </div>
+        </div>
+        <br>
+        <div class="row d-flex">
+            <div class="mx-auto col-8 ms-auto">
+                <a class="btn btn-primary" href="/cart">Back</a>
+                <a class="btn btn-primary" href="/payment">Checkout</a>
+            </div>
+        </div> 
+    </div>
+</div>

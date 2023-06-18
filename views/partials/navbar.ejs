@@ -1,0 +1,83 @@
+<div class="superNav border-bottom py-2 bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 centerOnMobile">
+        <select class="me-3 border-0 bg-light">
+          <option value="en-us">EN-US</option>
+        </select>
+        <span class="d-none d-lg-inline-block d-md-inline-block d-sm-inline-block d-xs-none me-3"><strong>info@somedomain.com</strong></span>
+        <span class="me-3"><i class="fa-solid fa-phone me-1 text-warning"></i> <strong>1-800-123-1234</strong></span>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 d-none d-lg-block d-md-block-d-sm-block d-xs-none text-end">
+        <span class="me-3"><i class="fa-solid fa-truck text-muted me-1"></i><a class="text-muted" href="#">Shipping</a></span>
+        <span class="me-3"><i class="fa-solid fa-file  text-muted me-2"></i><a class="text-muted" href="#">Policy</a></span>
+      </div>
+      
+    </div>
+  </div>
+</div>
+<nav class="navbar navbar-expand-lg bg-white sticky-top navbar-default p-3 shadow-sm">
+  <div class="container">
+    <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/b/b2/Hamburger_icon.svg" alt="">
+    </button>
+    <a class="navbar-brand" href="/"><i class="fa-solid fa-shop me-2"></i> <strong>MERCATUS</strong></a>
+
+    <div class=" collapse navbar-collapse" id="navbarNavDropdown">
+      <div class="ms-auto d-none d-lg-block">
+        <div class="input-group">
+          <span class="border-warning input-group-text bg-warning text-white"><i class="fa-solid fa-magnifying-glass"></i></span>
+          <form action="/catalogue" class="d-flex">
+            <input type="text" class="form-control border-warning" style="color:#7a7a7a" name="subject">
+            <button class="btn btn-warning text-white">Search</a>
+          </form>
+          
+          
+        </div>
+      </div>
+      <ul class="navbar-nav ms-auto ">
+        <li class="nav-item">
+          <a class="nav-link mx-2 text-uppercase" href="/catalogue">Catalogue</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link mx-2 text-uppercase" href="/catalogue/new-resource">Create Resource</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link mx-2 text-uppercase" href="/about">About</a>
+        </li>
+      </ul>
+
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="navbar-brand" href="/cart">
+            <img
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6UP3N0VDTz4DtPE329ozzP3nLADQD6LUtNklaLPQ&s"
+              width="40%"
+              alt="Shopping Cart"
+              loading="lazy"
+            />
+          </a>
+        </li>
+      </ul>
+
+      <ul class="navbar-nav ms-auto ">
+        <% if(!currentUser) {%> 
+        <li class="nav-item">
+          <a class="nav-link mx-2 text-uppercase" href="/register"><i class="fa-solid fa-circle-user me-1"></i>REGISTER</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link mx-2 text-uppercase" href="/login"><i class="fa-solid fa-circle-user me-1"></i>LOGIN</a>
+        </li>
+        <% } else { %>
+        <li class="nav-item">
+          <a class="nav-link mx-2 text-uppercase" href="/profile"><strong class="nav-link mx-2 text-uppercase"><%=currentUser.username %> </strong></a>
+          
+        </li>
+        <li class="nav-item">
+          <a class="nav-link mx-2 text-uppercase" href="/logout"><i class="fa-solid fa-circle-user me-1"></i>LOGOUT</a>
+        </li>
+        <% } %> 
+      </ul>
+    </div>
+  </div>
+</nav>

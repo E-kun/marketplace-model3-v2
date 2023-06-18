@@ -1,0 +1,149 @@
+<% layout('layouts/boilerplate')%>
+<div class="container">
+    <div class="row">
+        <div class="col-2 gap-3 ">
+            <form action="/catalogue">
+                <div class="card my-3">
+                    <article class="card-group-item">
+                        <header class="card-header">
+                            <h6 class="title">Subjects </h6>
+                        </header>
+                        <div class="filter-content">
+                            <div class="card-body">
+                            <form>
+                                <label class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="English">
+                                    <span class="form-check-label">
+                                        English
+                                    </span>
+                                </label> <!-- form-check.// -->
+                                <label class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="Maths">
+                                    <span class="form-check-label">
+                                        Maths
+                                    </span>
+                                </label> <!-- form-check.// -->
+                                <label class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="Science">
+                                    <span class="form-check-label">
+                                        Science
+                                    </span>
+                                </label> <!-- form-check.// -->
+                                <label class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="Bahasa Melayu">
+                                    <span class="form-check-label">
+                                        Bahasa Melayu
+                                    </span>
+                                </label> <!-- form-check.// -->
+                            </form>
+                            </div> <!-- card-body.// -->
+                        </div>
+                    </article> <!-- card-group-item.// -->
+                </div>
+                <div class="card my-3">
+                    <article class="card-group-item">
+                        <header class="card-header">
+                            <h6 class="title">Levels </h6>
+                        </header>
+                        <div class="filter-content">
+                            <div class="card-body">
+                            <form>
+                                <label class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="Level 1">
+                                    <span class="form-check-label">
+                                        Level 1
+                                    </span>
+                                </label> <!-- form-check.// -->
+                                <label class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="Level 2">
+                                    <span class="form-check-label">
+                                        Level 2
+                                    </span>
+                                </label> <!-- form-check.// -->
+                                <label class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="Level 3">
+                                    <span class="form-check-label">
+                                        Level 3
+                                    </span>
+                                </label> <!-- form-check.// -->
+                                <label class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="Level 4">
+                                    <span class="form-check-label">
+                                        Level 4
+                                    </span>
+                                </label> <!-- form-check.// -->
+                            </form>
+                            </div> <!-- card-body.// -->
+                        </div>
+                    </article> <!-- card-group-item.// -->
+                </div>
+                
+                <div class="card my-3">
+                    <article class="card-group-item">
+                        <header class="card-header">
+                            <h6 class="title">Resource Type </h6>
+                        </header>
+                        <div class="filter-content">
+                            <div class="card-body">
+                            <form>
+                                <label class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="Presentation">
+                                    <span class="form-check-label">
+                                        Presentation
+                                    </span>
+                                </label> <!-- form-check.// -->
+                                <label class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="Test">
+                                    <span class="form-check-label">
+                                        Test
+                                    </span>
+                                </label> <!-- form-check.// -->
+                                <label class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="Audio">
+                                    <span class="form-check-label">
+                                        Audio
+                                    </span>
+                                </label> <!-- form-check.// -->
+                                <label class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="PDF Document">
+                                    <span class="form-check-label">
+                                        PDF Document
+                                    </span>
+                                </label> <!-- form-check.// -->
+                            </form>
+                            </div> <!-- card-body.// -->
+                        </div>
+                    </article> <!-- card-group-item.// -->
+                </div>
+                <button class="btn btn-primary mt-3">Filter Results</button>
+            </form>
+            
+        </div>
+        <div class="col-8">
+            <div class="d-sm-flex">
+                <div class="me-sm-2">
+                    <ul>
+                        <% for(let resource of resources){ %> 
+                        <div class="card mb-3 mx-auto col-md-auto border border-dark" style="width: 60rem;">
+                            <div class="row">
+                                <div class="col-md-4 mx-3">
+                                    <img class="img-fluid" alt="Sample Image" src="<%=resource.image%> ">
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="card-body">
+                                        <h5 class="card-title"><%=resource.name%></h5>
+                                        <p class="card-text">$<%=resource.price%></p>
+                                        <p class="card-text"><%=resource.description%> </p>
+                                        <a class="btn btn-primary" href="/catalogue/<%=resource.resourceid%> ">View Resource</a>
+                                        <a class="btn btn-primary" href="/cart/<%=resource.resourceid%>">Add To Cart</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <% } %> 
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

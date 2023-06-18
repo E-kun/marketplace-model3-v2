@@ -1,0 +1,43 @@
+<% layout('layouts/boilerplate')%>
+<% if(resources){ %>
+    <div class="row">
+        <div class="card mb-3 mx-auto col-8">
+            <h1 class="d-flex justify-content-center">Shopping Cart</h1>
+            <br>
+            <ul class="list-group d-flex justify-content-between">
+                <% for(let resource of resources){ %> 
+                <li class="list-group-item d-flex justify-content-evenly">
+                    <strong><%=resource.name %></strong>
+                    <span class="label label-success">Each Item: $<%=resource.price %></span>
+                    <span class="badge bg-primary">Qty: <%=resource.qty %> </span>
+                    <span class="label label-success">Item Subtotal: $<%=resource.subtotal %></span>
+                    <div class="btn-group">
+                        <button class="btn btn-primary btn-xs dropdown-toggle " type="button" data-bs-toggle="dropdown">Action <span class="caret"></span></button>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Reduce by 1</a></li>
+                            <li><a href="#">Remove All</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <% } %> 
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="mb-3 mx-auto col-8 me-auto">
+            <strong>Total: $<%=totalPrice %></strong>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="mb-3 mx-auto col-8 me-auto">
+            <a class="btn btn-primary" href="/checkout">Checkout</a>
+        </div>
+    </div> 
+<% } else{ %>
+    <div class="row">
+        <div class="col-6 offset-3 mb-4">
+            <h2>No Items in Cart</h2>
+        </div>
+    </div>
+<% } %>  

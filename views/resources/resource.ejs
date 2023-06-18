@@ -1,0 +1,47 @@
+<% layout('layouts/boilerplate')%>
+<div class="columns">
+    <form action="/catalogue/resource" method="POST">
+        <div class="card mb-3 mx-auto col-md-auto" style="width: 55rem;">
+            <div class="row mx-auto">
+                
+                <div class="col-md-4 mx-3">
+                    <img class="img-fluid" alt="Sample Image" src="<%=resource.image%>">
+                </div>
+                <br>
+                <h3><%=resource.name%></h3>
+                <h3>Price: $<%=resource.price%></h3>
+                <h3>Subject: <%=resource.subject%></h3>
+                <h2>Description</h2>
+                <p><%=resource.description%></p>
+                <div class="card-body">
+                    <a class="btn btn-primary" href="/cart/<%=resource.resourceid%>" disabled>Add To Cart</a>
+                </div>
+                <a class="card-link btn btn-info" href="<%=resource.file%>">Download File</a>
+            </div>
+        </div>
+    </form>
+    
+    <div class="mb-3 mx-auto col-md-auto" style="width: 60rem;">
+        <h3>Resource Updates</h3>
+        <div class="row">
+            <div class="card-body">
+                <h5 class="card-title">Update Title</h5>
+                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo maxime voluptates accusamus facilis, atque expedita reprehenderit? Harum earum quam minus? Illo adipisci ab dolor porro, odit magni ratione quas nihil. </p>
+            </div>
+            <div class="card-body">
+                <a type="button" class="btn btn-primary" href="/edit-announcement">Edit Update</a>
+                <a type="button" class="btn btn-primary" href="/delete-announcement">Delete Update</a>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <a class="card-link btn btn-info" href="/catalogue">All Resources</a>
+        <a class="card-link btn btn-info" href="/catalogue/<%=resource.resourceid%>/edit">Edit Resource</a>
+    </div>
+    <div class="card-body">
+        <form class="d-inline" action="/catalogue/<%=resource.resourceid%>?_method=DELETE" method="POST">
+            <button class="btn btn-danger">Delete Resource</button>
+        </form>
+    </div>
+    
+</div>
