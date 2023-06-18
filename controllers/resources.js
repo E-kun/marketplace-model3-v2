@@ -35,7 +35,7 @@ module.exports.catalogue = async (req, res) => {
         }
     } catch(err){
         console.log(err);
-        req.flash('error', 'An error has occurred. Unable to locate resources.');
+        // req.flash('error', 'An error has occurred. Unable to locate resources.');
         res.redirect('/catalogue');
     } finally {
         client.release();
@@ -63,12 +63,12 @@ module.exports.createResouce = async (req, res, next) => {
             }    
         });
         // await resource.save();
-        req.flash('success', 'New resource has been successfully created.');
+        // req.flash('success', 'New resource has been successfully created.');
         res.redirect(`/catalogue/${id}`);
         console.log(date);
     } catch(err){
         console.log(err);
-        req.flash('error', 'An error has occurred. Unable to create resource.');
+        // req.flash('error', 'An error has occurred. Unable to create resource.');
         res.redirect('/catalogue');
     } finally {
         client.release();
@@ -99,13 +99,14 @@ module.exports.showResource = async (req, res) => {
             }
             resource = result.rows[0];
 
-            res.render('resources/resource', { resource, msg: req.flash("success") });
+            res.render('resources/resource', { resource });
+            // res.render('resources/resource', { resource, msg: req.flash("success") });
         });
         // console.log(resource.file);
         
     } catch(err){
         console.log(err);
-        req.flash('error', 'An error has occurred. Unable to locate resource.');
+        // req.flash('error', 'An error has occurred. Unable to locate resource.');
         res.redirect('/catalogue');
     } finally {
         client.release();
@@ -128,11 +129,11 @@ module.exports.editResource = async (req, res) => {
 
         });
         // const resource = await Resource.findByIdAndUpdate(id, { ...req.body.resource });
-        req.flash('success', 'Successfully updated resource.');
+        // req.flash('success', 'Successfully updated resource.');
         res.redirect(`/catalogue/${id}`);
     } catch(err){
         console.log(err);
-        req.flash('error', 'An error has occurred. Unable to update resource.');
+        // req.flash('error', 'An error has occurred. Unable to update resource.');
         res.redirect('/catalogue');
     } finally {
         client.release();
@@ -152,15 +153,15 @@ module.exports.deleteResource = async (req, res) => {
             if (err) {
                 throw err
             }
-            req.flash('success', 'Successfully deleted resource.');
+            // req.flash('success', 'Successfully deleted resource.');
             if (!resource) {
-                req.flash('error', 'Cannot find that resource!');
+                // req.flash('error', 'Cannot find that resource!');
             }
         });
         res.redirect(`/catalogue`);
     } catch(err){
         console.log(err);
-        req.flash('error', 'An error has occurred. Unable to delete resource.');
+        // req.flash('error', 'An error has occurred. Unable to delete resource.');
         res.redirect('/catalogue');
     } finally {
         client.release();
@@ -184,7 +185,7 @@ module.exports.renderEditForm = async (req, res) => {
             res.render('resources/edit', { resource });
             
             if (!resource) {
-                req.flash('error', 'Cannot find that resource!');
+                // req.flash('error', 'Cannot find that resource!');
                 return res.redirect('/catalogue');
             }
         });
