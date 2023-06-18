@@ -30,10 +30,10 @@ router.get('/new-resource', resources.renderNewForm);
 
 router.route('/:id')
     .get(catchAsync(resources.showResource))
-    .put(isLoggedIn, validateResource, catchAsync(resources.editResource))
-    // .put(validateResource, catchAsync(resources.editResource))
-    .delete(isLoggedIn, catchAsync(resources.deleteResource));
-    // .delete(catchAsync(resources.deleteResource));
+    // .put(isLoggedIn, validateResource, catchAsync(resources.editResource))
+    .put(validateResource, catchAsync(resources.editResource))
+    // .delete(isLoggedIn, catchAsync(resources.deleteResource));
+    .delete(catchAsync(resources.deleteResource));
 
 router.get('/:id/edit', isLoggedIn, catchAsync(resources.renderEditForm));
 // router.get('/:id/edit', catchAsync(resources.renderEditForm));
