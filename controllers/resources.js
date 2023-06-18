@@ -39,7 +39,7 @@ module.exports.catalogue = async (req, res) => {
         // req.flash('error', 'An error has occurred. Unable to locate resources.');
         res.redirect('/catalogue');
     } finally{
-        client.release(true);
+        client.release();
     }
 }
 
@@ -72,7 +72,7 @@ module.exports.createResouce = async (req, res, next) => {
         // req.flash('error', 'An error has occurred. Unable to create resource.');
         res.redirect('/catalogue');
     } finally {
-        client.release(true);
+        client.release();
     }
     
 }
@@ -110,7 +110,7 @@ module.exports.showResource = async (req, res) => {
         // req.flash('error', 'An error has occurred. Unable to locate resource.');
         res.redirect('/catalogue');
     } finally {
-        client.release(true);
+        client.release();
     }
 }
 
@@ -137,7 +137,7 @@ module.exports.editResource = async (req, res) => {
         // req.flash('error', 'An error has occurred. Unable to update resource.');
         res.redirect('/catalogue');
     } finally {
-        client.release(true);
+        client.release();
     }
     
 }
@@ -165,7 +165,7 @@ module.exports.deleteResource = async (req, res) => {
         // req.flash('error', 'An error has occurred. Unable to delete resource.');
         res.redirect('/catalogue');
     } finally {
-        client.release(true);
+        client.release();
     }
 }
 
@@ -196,7 +196,7 @@ module.exports.renderEditForm = async (req, res) => {
         console.log(err);
         res.redirect('/catalogue');
     } finally {
-        client.release(true);
+        client.release();
     }
     
 }
