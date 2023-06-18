@@ -13,7 +13,7 @@ const { dbConnect, pgConnect, mongoClient, pgPool } = require('./utils/db-connec
 const ExpressError = require('./utils/ExpressError');
 
 //Route files
-// const resourceRoutes = require('./routes/resources');
+const resourceRoutes = require('./routes/resources');
 const userRoutes = require('./routes/users');
 // const cartRoutes = require('./routes/cart');
 
@@ -42,6 +42,7 @@ pgConnect();
 
 //Express is using defined routes inside respective router objects.
 app.use('/', userRoutes);
+app.use('/catalogue', resourceRoutes);
 
 app.get('/', async (req, res) => {
     res.render('home');
