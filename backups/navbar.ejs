@@ -61,14 +61,22 @@
       </ul>
 
       <ul class="navbar-nav ms-auto ">
-
+        <% if(!currentUser) {%> 
         <li class="nav-item">
-          <a class="nav-link mx-2 text-uppercase" href="/profile"><strong class="nav-link mx-2 text-uppercase">User</strong></a>
+          <a class="nav-link mx-2 text-uppercase" href="/register"><i class="fa-solid fa-circle-user me-1"></i>REGISTER</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link mx-2 text-uppercase" href="/login"><i class="fa-solid fa-circle-user me-1"></i>LOGIN</a>
+        </li>
+        <% } else { %>
+        <li class="nav-item">
+          <a class="nav-link mx-2 text-uppercase" href="/profile"><strong class="nav-link mx-2 text-uppercase"><%=currentUser.username %> </strong></a>
           
         </li>
         <li class="nav-item">
           <a class="nav-link mx-2 text-uppercase" href="/logout"><i class="fa-solid fa-circle-user me-1"></i>LOGOUT</a>
         </li>
+        <% } %> 
       </ul>
     </div>
   </div>
