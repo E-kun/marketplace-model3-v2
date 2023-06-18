@@ -63,7 +63,6 @@ module.exports.createResouce = async (req, res, next) => {
               throw err
             }    
         });
-        // await resource.save();
         // req.flash('success', 'New resource has been successfully created.');
         res.redirect(`/catalogue/${id}`);
         console.log(date);
@@ -93,7 +92,6 @@ module.exports.showResource = async (req, res) => {
 
     try{
         const query = "SELECT * FROM Resources WHERE resourceid=$1;"
-        // const resource = await Resource.findById(id);
         await client.query(query, values, (err, result) => {
             if (err) {
                 throw err
@@ -117,28 +115,32 @@ module.exports.showResource = async (req, res) => {
 module.exports.editResource = async (req, res) => {
     const { id } = req.params;
     const client = await pgPool.connect();
-    const resource = { ...req.body.resource }
-    
+    // const resource = { ...req.body.resource }
+
     const values = [id];
 
-    try{
-        const query = `UPDATE resources SET name='${resource.name}', price=${resource.price}, subject='${resource.subject}', image='${resource.image}', description='${resource.description}' WHERE resourceid=$1;`
-        await client.query(query, values, (err, result) => {
-            if (err) {
-                throw err
-            }
+    console.log(req.params);
+    console.log(req.body);
 
-        });
-        // const resource = await Resource.findByIdAndUpdate(id, { ...req.body.resource });
-        // req.flash('success', 'Successfully updated resource.');
-        res.redirect(`/catalogue/${id}`);
-    } catch(err){
-        console.log(err);
-        // req.flash('error', 'An error has occurred. Unable to update resource.');
-        res.redirect('/catalogue');
-    } finally {
-        client.release();
-    }
+    res.send("Test");
+
+    // try{
+    //     const query = `UPDATE resources SET name='${resource.name}', price=${resource.price}, subject='${resource.subject}', image='${resource.image}', description='${resource.description}' WHERE resourceid=$1;`
+    //     await client.query(query, values, (err, result) => {
+    //         if (err) {
+    //             throw err
+    //         }
+
+    //     });
+    //     // req.flash('success', 'Successfully updated resource.');
+    //     res.redirect(`/catalogue/${id}`);
+    // } catch(err){
+    //     console.log(err);
+    //     // req.flash('error', 'An error has occurred. Unable to update resource.');
+    //     res.redirect('/catalogue');
+    // } finally {
+    //     client.release();
+    // }
     
 }
 
@@ -149,15 +151,14 @@ module.exports.deleteResource = async (req, res) => {
 
     try{
         const query = "DELETE FROM resources WHERE resourceid=$1;"
-        // await Resource.findByIdAndDelete(id);
         await client.query(query, values, (err, result) => {
             if (err) {
                 throw err
             }
             // req.flash('success', 'Successfully deleted resource.');
-            if (!resource) {
-                // req.flash('error', 'Cannot find that resource!');
-            }
+            // if (!id) {
+            //     req.flash('error', 'Cannot find that resource!');
+            // }
         });
         res.redirect(`/catalogue`);
     } catch(err){

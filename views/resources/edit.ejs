@@ -3,7 +3,7 @@
 <div class="row">
     <div class="col-6 offset-3 mb-4">
         
-        <form action="/catalogue/<%=resource.resourceid%>?_method=PUT" method="POST" class="validated-form" novalidate>
+        <form action="/catalogue/<%=resource.resourceid%>?_method=PUT" method="POST" class="validated-form" novalidate enctype="multipart/form-data">
             <div class="mb-3">
                 <label class="form-label" for="name">Resource Name</label>
                 <input class="form-control" type="text" id="name" name="resource[name]" value="<%=resource.name%>" required>
