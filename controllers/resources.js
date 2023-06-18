@@ -18,7 +18,6 @@ module.exports.catalogue = async (req, res) => {
                 resources = result.rows;
                 res.render('resources/catalogue', { resources, subject });
             });
-            client.release();
             // Don't return query result or the page load will slow down.
             // const resources = await Resource.find({ subject })
             // res.render('resources/catalogue', { resources, subject });
@@ -32,14 +31,16 @@ module.exports.catalogue = async (req, res) => {
                 resources = result.rows;
                 res.render('resources/catalogue', { resources, subject: 'All' });
             });
-            client.release();
+
             // const resources = await Resource.find({})
         }
     } catch(err){
         console.log(err);
         // req.flash('error', 'An error has occurred. Unable to locate resources.');
         res.redirect('/catalogue');
-    } 
+    } finally{
+        client.release(true);
+    }
 }
 
 module.exports.createResouce = async (req, res, next) => {
@@ -71,7 +72,7 @@ module.exports.createResouce = async (req, res, next) => {
         // req.flash('error', 'An error has occurred. Unable to create resource.');
         res.redirect('/catalogue');
     } finally {
-        client.release();
+        client.release(true);
     }
     
 }
@@ -109,7 +110,7 @@ module.exports.showResource = async (req, res) => {
         // req.flash('error', 'An error has occurred. Unable to locate resource.');
         res.redirect('/catalogue');
     } finally {
-        client.release();
+        client.release(true);
     }
 }
 
@@ -136,7 +137,7 @@ module.exports.editResource = async (req, res) => {
         // req.flash('error', 'An error has occurred. Unable to update resource.');
         res.redirect('/catalogue');
     } finally {
-        client.release();
+        client.release(true);
     }
     
 }
@@ -164,7 +165,7 @@ module.exports.deleteResource = async (req, res) => {
         // req.flash('error', 'An error has occurred. Unable to delete resource.');
         res.redirect('/catalogue');
     } finally {
-        client.release();
+        client.release(true);
     }
 }
 
@@ -195,7 +196,7 @@ module.exports.renderEditForm = async (req, res) => {
         console.log(err);
         res.redirect('/catalogue');
     } finally {
-        client.release();
+        client.release(true);
     }
     
 }

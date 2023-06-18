@@ -51,6 +51,6 @@ module.exports.pgConnect = async () => {
     } catch (error) {
         console.log(error)
     } finally {
-        client.release();
+        client.release(true);
     }
 }
