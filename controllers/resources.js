@@ -115,32 +115,26 @@ module.exports.showResource = async (req, res) => {
 module.exports.editResource = async (req, res) => {
     const { id } = req.params;
     const client = await pgPool.connect();
-    // const resource = { ...req.body.resource }
-
+    const resource = { ...req.body.resource }
     const values = [id];
 
-    console.log(req.params);
-    console.log(req.body);
+    try{
+        const query = `UPDATE resources SET name='${resource.name}', price=${resource.price}, subject='${resource.subject}', image='${resource.image}', description='${resource.description}' WHERE resourceid=$1;`
+        await client.query(query, values, (err, result) => {
+            if (err) {
+                throw err
+            }
 
-    res.send("Test");
-
-    // try{
-    //     const query = `UPDATE resources SET name='${resource.name}', price=${resource.price}, subject='${resource.subject}', image='${resource.image}', description='${resource.description}' WHERE resourceid=$1;`
-    //     await client.query(query, values, (err, result) => {
-    //         if (err) {
-    //             throw err
-    //         }
-
-    //     });
-    //     // req.flash('success', 'Successfully updated resource.');
-    //     res.redirect(`/catalogue/${id}`);
-    // } catch(err){
-    //     console.log(err);
-    //     // req.flash('error', 'An error has occurred. Unable to update resource.');
-    //     res.redirect('/catalogue');
-    // } finally {
-    //     client.release();
-    // }
+        });
+        // req.flash('success', 'Successfully updated resource.');
+        res.redirect(`/catalogue/${id}`);
+    } catch(err){
+        console.log(err);
+        // req.flash('error', 'An error has occurred. Unable to update resource.');
+        res.redirect('/catalogue');
+    } finally {
+        client.release();
+    }
     
 }
 
@@ -184,6 +178,7 @@ module.exports.renderEditForm = async (req, res) => {
             }
             const resource = result.rows[0];
 
+            // console.log(resource);
             res.render('resources/edit', { resource });
             
             if (!resource) {

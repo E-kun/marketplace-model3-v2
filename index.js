@@ -5,6 +5,8 @@ const path = require('path');
 const ejsMate = require('ejs-mate');
 const methodOverride = require('method-override');
 const flash = require('connect-flash');
+const multer = require('multer');
+const upload = multer();
 const dotenv = require("dotenv");
 dotenv.config();
 
@@ -28,6 +30,7 @@ app.engine('ejs', ejsMate);
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static('public'));
 app.use(methodOverride('_method'));
+app.use(express.urlencoded({ extended: true }));
 // app.use(flash());
 
 // app.use((req, res, next) => {
@@ -45,6 +48,12 @@ pgConnect();
 //Express is using defined routes inside respective router objects.
 app.use('/', userRoutes);
 app.use('/catalogue', resourceRoutes);
+
+// app.put('/catalogue/:resourceid', upload.none(), async (req, res, next) => {
+//     console.log(req.params);
+//     console.log(req.body);
+//     res.send('PUT Test Successful');
+// });
 
 app.get('/', async (req, res) => {
     res.render('home');

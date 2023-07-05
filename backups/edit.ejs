@@ -1,0 +1,70 @@
+<% layout('layouts/boilerplate')%>
+<h2 class="d-flex justify-content-center">Edit Resource</h2>
+<div class="row">
+    <div class="col-6 offset-3 mb-4">
+        
+        <form action="/catalogue/<%=resource.resourceid%>?_method=PUT" method="POST" class="validated-form" novalidate enctype="multipart/form-data">
+            <div class="mb-3">
+                <label class="form-label" for="name">Resource Name</label>
+                <input class="form-control" type="text" id="name" name="resource[name]" value="<%=resource.name%>" required>
+                <div class="valid-feedback">
+                    Resource name is valid.
+                </div>
+                <div class="invalid-feedback">
+                    Resource name is invalid.
+                </div>
+            </div>
+            <!-- <input type="file" name="image" id="" multiple> -->
+            <div class="mb-3">
+                <label class="form-label" for="image">Image URL</label>
+                <input class="form-control" type="text" id="image" name="resource[image]" value="<%=resource.image%>" required>
+                <div class="valid-feedback">
+                    Image URL Present!
+                </div>
+                <div class="invalid-feedback">
+                    Please include an image for this listing.
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="price">Resource Price</label>
+                <div class="input-group">
+                    <span class="input-group-text" id="basic-addon1">$</span>
+                    <input type="text" class="form-control" id="price" placeholder="0.00" aria-label="Price" aria-describedby="price-label" name="resource[price]" value="<%=resource.price %>" required>
+                    <div class="valid-feedback">
+                        Price is valid.
+                    </div>
+                    <div class="invalid-feedback">
+                        Price is invalid. Please add a value greater than 0.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label" for="subject">Subject</label>
+                <input class="form-control" type="text" id="subject" name="resource[subject]" value="<%=resource.subject%>" required>
+                <div class="valid-feedback">
+                    Subject name is valid.
+                </div>
+                <div class="invalid-feedback">
+                    Subject name is invalid.
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" for="description">Description</label>
+                <textarea class="form-control" type="text" id="description" name="resource[description]" required><%=resource.description %></textarea>
+                <div class="valid-feedback">
+                    Description is valid.
+                </div>
+                <div class="invalid-feedback">
+                    Please add a description for this listing.
+                </div>
+            </div>
+            <div class="mb-3">
+                <button class="btn btn-success">Update Resource</button>
+            </div>
+            
+        </form>
+        <a href="/catalogue/<%=resource._id%> ">Quit Editing</a>
+    </div>
+</div>
