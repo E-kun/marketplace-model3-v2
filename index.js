@@ -21,7 +21,7 @@ const { sessionConfig } = require('./utils/sessionConfig');
 //Route files
 const resourceRoutes = require('./routes/resources');
 const userRoutes = require('./routes/users');
-// const cartRoutes = require('./routes/cart');
+const cartRoutes = require('./routes/cart');
 
 //Schema model files
 const User = require('./models/user');
@@ -57,6 +57,7 @@ app.use((req, res, next) => {
 
 //Express is using defined routes inside respective router objects.
 app.use('/', userRoutes);
+app.use('/cart', cartRoutes);
 app.use('/catalogue', resourceRoutes);
 
 app.get('/', async (req, res) => {
