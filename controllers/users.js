@@ -36,9 +36,8 @@ module.exports.createUser = async(req, res) => {
         req.flash('error', err.message);
         res.redirect('register');
     }
-    // res.send(req.body);
     //Authentication setup required here. Flashing for testing purposes first.
-    req.flash('success', 'User created.');
+    // req.flash('success', 'User created.');
     // res.redirect('/catalogue');
 }
 

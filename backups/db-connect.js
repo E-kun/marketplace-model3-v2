@@ -1,5 +1,4 @@
 const { MongoClient, ServerApiVersion } = require('mongodb');
-const mongoose = require('mongoose');
 const { Pool } = require("pg");
 const dotenv = require("dotenv");
 dotenv.config();
@@ -13,25 +12,35 @@ const pool = new Pool({
     port: process.env.PGPORT
 })
 
-module.exports.dbConnect = async () => {
-    try {
-      mongoose.set('strictQuery', false);
-      mongoose.connect(mongoConnectionString);
+const uri = mongoConnectionString;
 
-      const db = mongoose.connection;
-      db.on("error", console.error.bind(console, "connection error:"));
-      db.once("open", () => {
-          console.log("Pinged your deployment. You successfully connected to MongoDB!");
-      });
+const mClient = new MongoClient(uri, {
+    serverApi: {
+      version: ServerApiVersion.v1,
+      strict: true,
+      deprecationErrors: true,
     }
-    catch(err){
-      console.log(err);
-      req.flash('error', 'An error has occurred. Unable to delete resource.');
-      res.redirect('/catalogue');
-    }
-}
+  });
+
+module.exports.mongoClient = mClient;
 
 module.exports.pgPool = pool;
+
+module.exports.dbConnect = async () => {
+    
+    try {
+        // Connect the client to the server	(optional starting in v4.7)
+        await mClient.connect();
+
+        // console.log(mClient);
+        // Send a ping to confirm a successful connection
+        await mClient.db("admin").command({ ping: 1 });
+        console.log("Pinged your deployment. You successfully connected to MongoDB!");
+      } finally {
+        // Ensures that the client will close when you finish/error
+        await mClient.close();
+      }
+}
 
 module.exports.pgConnect = async () => {
     const client = await pool.connect();

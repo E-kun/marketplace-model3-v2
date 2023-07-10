@@ -31,7 +31,7 @@ router.get('/new-resource', resources.renderNewForm);
 router.route('/:id')
     .get(catchAsync(resources.showResource))
     // .put(isLoggedIn, validateResource, catchAsync(resources.editResource))
-    .put(upload.none(), catchAsync(resources.editResource))
+    .put(upload.none(), validateResource, catchAsync(resources.editResource))
     // .delete(isLoggedIn, catchAsync(resources.deleteResource));
     .delete(catchAsync(resources.deleteResource));
 
