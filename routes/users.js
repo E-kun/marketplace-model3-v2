@@ -36,18 +36,19 @@ router.route('/payment')
 router.route('/config')
     .get(users.getStripePubKey);
     
-router.route('/create-payment-intent')
-    .post(users.createPaymentIntent);
+router.route('/create-checkout-session')
+    .post(users.createCheckoutSession);
 
 router.route('/payment/complete')
     .get(users.renderPaymentSuccessPage);
-    
+
+router.route('/payment/failed')
+    .get(users.renderPaymentFailedPage);
+
     // Expose a endpoint as a webhook handler for asynchronous events.
     // Configure your webhook in the stripe developer dashboard
     // https://dashboard.stripe.com/test/webhooks
 router.route('/webhook')
     .post(users.sendToWebhook);
-
-
 
 module.exports = router;

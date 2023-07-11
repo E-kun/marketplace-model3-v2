@@ -1,18 +1,28 @@
 module.exports = function Cart(oldCart){
     this.items = oldCart.items || {};
-    this.totalQty = oldCart.totalQty || 0;
-    this.totalPrice = oldCart.totalPrice || 0;
 
     this.add = function(item, id){
         let storedItem = this.items[id];
         if(!storedItem){
-            storedItem = this.items[id] = { name: item.name, item: item, qty: 0, price: item.price, subtotal: 0 };
-            console.log(storedItem.name);
+            storedItem = this.items[id] = 
+                { 
+                    price_data: {
+                        product_data: {
+                            name: item.name,
+                            description: item.description
+                        },
+                        currency: 'aud',
+                        tax_behavior: "exclusive",
+                        unit_amount: item.price*100
+                    }, 
+                    quantity: 0
+                    // subtotal: 0 
+                };
+            
         }
-        storedItem.qty++;
-        storedItem.subtotal = storedItem.item.price * storedItem.qty;
-        this.totalQty++;
-        this.totalPrice += storedItem.item.price;
+        storedItem.quantity++;
+        // console.log(storedItem);
+        // storedItem.subtotal = storedItem.item.price * storedItem.quantity;
     };
 
     this.generateArray = function() {

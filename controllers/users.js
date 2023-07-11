@@ -2,9 +2,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 const User = require('../models/user');
 const Cart = require('../models/cart');
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY, {
-    apiVersion: '2020-08-27'
-  });
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 function generateArray(cart) {
     const arr = [];
@@ -102,7 +100,12 @@ module.exports.createPaymentIntent = async (req, res) => {
 }
 
 module.exports.renderPaymentSuccessPage = (req, res) => {
+    req.session.cart = {};
     res.render('checkout/complete');
+}
+
+module.exports.renderPaymentFailedPage = (req, res) => {
+    res.render('checkout/paymentFailed');
 }
 
 module.exports.sendToWebhook = async (req, res) => {
@@ -144,17 +147,16 @@ module.exports.sendToWebhook = async (req, res) => {
   }
 
 module.exports.createCheckoutSession = async (req, res) => {
+    const currentCart = req.session.cart;
+    const cartArray = generateArray(currentCart);
     const session = await stripe.checkout.sessions.create({
-        line_items: [
-          {
-            // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-            price: '{{PRICE_ID}}',
-            quantity: 1,
-          },
-        ],
+        invoice_creation: {
+          enabled: true,
+        },
+        line_items: cartArray,
         mode: 'payment',
-        success_url: `${YOUR_DOMAIN}/success.html`,
-        cancel_url: `${YOUR_DOMAIN}/cancel.html`,
+        success_url: 'http://localhost:3180/payment/complete',
+        cancel_url: 'http://localhost:3180/payment/failed',
       });
     res.redirect(303, session.url);
 }

@@ -60,19 +60,22 @@ window.addEventListener('DOMContentLoaded', async() =>{
     mode: "billing"
   });
   const paymentElement = elements.create('payment');
+  const linkAuthenticationElement = elements.create("linkAuthentication");
 
   addressElement.mount('#address-element');
   paymentElement.mount('#payment-element');
+  linkAuthenticationElement.mount("#link-authentication-element");
+  paymentElement.mount("#payment-element");
 
   const form = document.getElementById("payment-form");
   form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      // console.log(window.location.href);
-      const {error} =  await stripe.confirmPayment({
-          elements,
-          confirmParams: {
-              return_url: window.location.href.split("?")[0] + "/complete"
-          }
+    e.preventDefault();
+    // console.log(window.location.href);
+    const {error} =  await stripe.confirmPayment({
+        elements,
+        confirmParams: {
+            return_url: window.location.href.split("?")[0] + "/complete"
+        }
       })
       if(error) {
           const messages = document.getElementById("error-messages");

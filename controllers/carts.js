@@ -9,7 +9,7 @@ module.exports.showCart = async (req, res) => {
         }
         const cart = new Cart(req.session.cart);
         const cartArray = cart.generateArray();
-        // console.log(cartArray);
+        console.log(cartArray);
         res.render('checkout/cart', {resources: cartArray, totalPrice: cart.totalPrice});
     } catch(err){
          console.log(err);
@@ -41,12 +41,12 @@ module.exports.addItemToCart = async (req, res) => {
             image: result.rows[0][5]
             // file: String
         }
-        console.log(resource);
+        // console.log(resource);
 
         cart.add(resource, resourceId);
             
         req.session.cart = cart;   
-        // console.log(req.session.cart);
+        console.log(req.session.cart.items);
         req.flash('success', 'Item added to cart.');
 
         // const resource = await Resource.findById(resourceId);
