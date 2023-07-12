@@ -9,8 +9,8 @@ module.exports.showCart = async (req, res) => {
         }
         const cart = new Cart(req.session.cart);
         const cartArray = cart.generateArray();
-        console.log(cartArray);
-        res.render('checkout/cart', {resources: cartArray, totalPrice: cart.totalPrice});
+        totalPrice = cart.getTotalPrice();
+        res.render('checkout/cart', {resources: cartArray, totalPrice});
     } catch(err){
          console.log(err);
          req.flash('error', 'An error has occurred. Unable to show shopping cart.');
@@ -45,13 +45,9 @@ module.exports.addItemToCart = async (req, res) => {
 
         cart.add(resource, resourceId);
             
-        req.session.cart = cart;   
-        console.log(req.session.cart.items);
+        req.session.cart = cart;
         req.flash('success', 'Item added to cart.');
 
-        // const resource = await Resource.findById(resourceId);
-        
-        // res.send(req.session.cart);
         res.redirect('/cart');
     } catch(err){
         console.log(err);

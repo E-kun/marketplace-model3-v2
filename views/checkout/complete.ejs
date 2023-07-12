@@ -20,8 +20,29 @@
             <div class="col-sm-6 col-md-4 col-md-offset-4 col-sm-offset-3 ">
                 <h1>Thanks for your order! Your payment has been processed successfully.</h1>                
                 <p>Details of your purchase are as below:</p>
-
-                <pre id="payment-intent"></pre>
+            </div>
+            <div class="row">
+                <div class="card mb-3 mx-auto col-8">
+                    <ul class="list-group d-flex justify-content-between">
+                        <% for(let resource of resources){ %> 
+                        <li class="list-group-item d-flex justify-content-evenly">
+                            <strong><%=resource.price_data.product_data.name%></strong>
+                            <span class="label label-success">Each Item: $<%=resource.price_data.unit_amount/100%></span>
+                            <span class="badge bg-primary">Qty: <%=resource.quantity%></span>
+                            <span class="label label-success">Item Subtotal: $<%=(resource.price_data.unit_amount/100)*resource.quantity%></span>
+                        </li>
+                        <% } %> 
+                    </ul>
+                    <div class="col align-self-end">
+                        <strong>Total: $<%=totalPrice%></strong>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="row">
+                <div class="mb-3 mx-auto col-8 ms-auto">
+                    
+                </div>
             </div>
         </div>
     </main>

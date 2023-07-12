@@ -25,11 +25,21 @@ module.exports = function Cart(oldCart){
         // storedItem.subtotal = storedItem.item.price * storedItem.quantity;
     };
 
-    this.generateArray = function() {
+    this.generateArray = function(){
         const arr = [];
         for (let id in this.items) {
             arr.push(this.items[id]);
         }
         return arr;
+    };
+
+    this.getTotalPrice = function(){
+        const cartArray = this.generateArray();
+        let numElements = cartArray.length;
+        let totalPrice = 0;
+        for(let i=0; i<numElements; i++){
+            totalPrice = totalPrice + (cartArray[i].price_data.unit_amount/100);
+        } 
+        return totalPrice;
     };
 };

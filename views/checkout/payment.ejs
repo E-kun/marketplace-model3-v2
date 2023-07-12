@@ -18,14 +18,33 @@
     <main class="container mt-5">
         <%- include('../partials/flash') %>  
         <div class="row">
-          <div class="col-6 offset-3 mb-4">
-              <h1>Checkout</h1>
-              <h4>Your Total: $<%=totalPrice %> </h4>
+          <div class="card mb-3 mx-auto col-8">
+            <br>
+            <h3 class="d-flex justify-content-center">Please review your order and ensure that the following items are correct. You will not be able to change your order past this point.</h3>
+            <br>
+            <ul class="list-group d-flex justify-content-between">
+                <% for(let resource of resources){ %> 
+                <li class="list-group-item d-flex justify-content-evenly">
+                    <strong><%=resource.price_data.product_data.name%></strong>
+                    <span class="label label-success">Each Item: $<%=resource.price_data.unit_amount/100%></span>
+                    <span class="badge bg-primary">Qty: <%=resource.quantity%></span>
+                    <span class="label label-success">Item Subtotal: $<%=(resource.price_data.unit_amount/100)*resource.quantity%></span>
+                </li>
+                <% } %> 
+            </ul>
+            <div class="col align-self-end">
+              <strong>Total: $<%=totalPrice%></strong>
+            </div>
+            <br>
+            <div class="row justify-content-center">
               <form action="/create-checkout-session" method="POST">
                 <button type="submit" id="checkout-button">Checkout</button>
               </form>
-              <br>
-          </div>
+              <div class="d-grid gap-2 my-3">
+                  <a class="btn btn-primary" href="/cart">Back</a>
+              </div>
+            </div> 
+        </div>
       </div>
     </main>
     <%- include('../partials/footer') %> 

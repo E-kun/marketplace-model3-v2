@@ -7,10 +7,10 @@
             <ul class="list-group d-flex justify-content-between">
                 <% for(let resource of resources){ %> 
                 <li class="list-group-item d-flex justify-content-evenly">
-                    <strong><%=resource.name %></strong>
-                    <span class="label label-success">Each Item: $<%=resource.price %></span>
-                    <span class="badge bg-primary">Qty: <%=resource.qty %> </span>
-                    <span class="label label-success">Item Subtotal: $<%=resource.subtotal %></span>
+                    <strong><%=resource.price_data.product_data.name%></strong>
+                    <span class="label label-success">Each Item: $<%=resource.price_data.unit_amount/100%></span>
+                    <span class="badge bg-primary">Qty: <%=resource.quantity%></span>
+                    <span class="label label-success">Item Subtotal: $<%=(resource.price_data.unit_amount/100)*resource.quantity%></span>
                     <div class="btn-group">
                         <button class="btn btn-primary btn-xs dropdown-toggle " type="button" data-bs-toggle="dropdown">Action <span class="caret"></span></button>
                         <ul class="dropdown-menu">
@@ -30,8 +30,10 @@
     </div>
     <hr>
     <div class="row">
-        <div class="mb-3 mx-auto col-8 me-auto">
-            <a class="btn btn-primary" href="/checkout">Checkout</a>
+        <div class="card mb-3 mx-auto col-8">
+            <div class="d-grid gap-2 my-3">
+                <a class="btn btn-primary" href="/payment">Checkout</a>
+            </div>
         </div>
     </div> 
 <% } else{ %>

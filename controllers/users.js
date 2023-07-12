@@ -4,14 +4,6 @@ const User = require('../models/user');
 const Cart = require('../models/cart');
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
-function generateArray(cart) {
-    const arr = [];
-    for (let id in cart.items) {
-        arr.push(cart.items[id]);
-    }
-    return arr;
-};
-
 module.exports.renderAboutPage = (req, res) => {
     res.render('about');
 }
@@ -61,25 +53,15 @@ module.exports.renderAnnouncementPage = (req, res) => {
   res.render('users/announcements');
 }
 
-module.exports.renderCheckoutPage = (req, res, next) => {
-    const currentCart = req.session.cart;
-    const cartArray = generateArray(currentCart);
-    if(!currentCart){
-        res.flash('error', 'A cart does not exist');
-        return res.redirect('/catalogue');
-    }
-    console.log(`Total Amount: $${currentCart.totalPrice}`);
-    res.render('checkout/checkout', {resources: cartArray, totalPrice: currentCart.totalPrice});
-}
-
 module.exports.renderPaymentForm = (req, res, next) => {
-    const currentCart = req.session.cart;
-    const cartArray = generateArray(currentCart);
-    if(!currentCart){
+    const cart = new Cart(req.session.cart);
+    const cartArray = cart.generateArray();
+    totalPrice = cart.getTotalPrice();
+    if(!req.session.cart){
         res.flash('error', 'A cart does not exist');
         return res.redirect('/catalogue');
     }
-    res.render('checkout/payment', {totalPrice: currentCart.totalPrice});
+    res.render('checkout/payment', {resources: cartArray, totalPrice});
 }
 
 module.exports.getStripePubKey = (req, res) => {
@@ -88,20 +70,12 @@ module.exports.getStripePubKey = (req, res) => {
     });
 }
 
-module.exports.createPaymentIntent = async (req, res) => {
-    //Replace the amount key value with a variable extracting the amount from the price of product
-    const paymentIntent = await stripe.paymentIntents.create({
-        amount: req.session.cart.totalPrice*100,
-        currency: 'usd',
-        automatic_payment_methods: { enabled: true },
-        
-    })
-    res.send({ clientSecret: paymentIntent.client_secret })
-}
-
 module.exports.renderPaymentSuccessPage = (req, res) => {
+    const cart = new Cart(req.session.cart);
+    const cartArray = cart.generateArray();
+    totalPrice = cart.getTotalPrice();
+    res.render('checkout/complete', {resources: cartArray, totalPrice});
     req.session.cart = {};
-    res.render('checkout/complete');
 }
 
 module.exports.renderPaymentFailedPage = (req, res) => {
@@ -147,8 +121,8 @@ module.exports.sendToWebhook = async (req, res) => {
   }
 
 module.exports.createCheckoutSession = async (req, res) => {
-    const currentCart = req.session.cart;
-    const cartArray = generateArray(currentCart);
+    const cart = new Cart(req.session.cart);
+    const cartArray = cart.generateArray();
     const session = await stripe.checkout.sessions.create({
         invoice_creation: {
           enabled: true,

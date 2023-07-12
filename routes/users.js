@@ -26,10 +26,6 @@ router.route('/new-announcement')
     .get(isLoggedIn, users.renderAnnouncementPage);
     // .get(users.renderAnnouncementPage);
 
-router.route('/checkout')
-    .get(users.renderCheckoutPage);
-    // .post(users.createCheckoutSession);
-
 router.route('/payment')
     .get(users.renderPaymentForm);
 
