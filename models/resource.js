@@ -7,11 +7,11 @@ const ResourceSchema = new Schema({
     price: Number,
     description: String,
     subject: String,
-    file: String
-    // author: {
-    //     type: Schema.Types.ObjectId,
-    //     ref: 'User'
-    // },
+    file: String,
+    author: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    },
     // reviews: [
     //     {
     //         type: Schema.Types.ObjectId,

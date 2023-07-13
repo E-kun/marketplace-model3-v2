@@ -22,6 +22,7 @@ const { sessionConfig } = require('./utils/sessionConfig');
 const resourceRoutes = require('./routes/resources');
 const userRoutes = require('./routes/users');
 const cartRoutes = require('./routes/cart');
+const checkoutRoutes = require('./routes/checkout')
 
 //Schema model files
 const User = require('./models/user');
@@ -59,6 +60,7 @@ app.use((req, res, next) => {
 app.use('/', userRoutes);
 app.use('/cart', cartRoutes);
 app.use('/catalogue', resourceRoutes);
+app.use('/checkout', checkoutRoutes)
 
 app.get('/', async (req, res) => {
     res.render('home');

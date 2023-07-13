@@ -16,7 +16,6 @@
                 <div class="card-body">
                     <a class="btn btn-primary" href="/cart/<%=resource.resourceid%>" disabled>Add To Cart</a>
                 </div>
-                <a class="card-link btn btn-info" href="<%=resource.file%>">Download File</a>
             </div>
         </div>
     </form>
@@ -33,15 +32,15 @@
                 <a type="button" class="btn btn-primary" href="/delete-announcement">Delete Update</a>
             </div>
         </div>
+
+        <div class="card-body">
+            <a class="card-link btn btn-info" href="/catalogue">All Resources</a>
+            <a class="card-link btn btn-info" href="/catalogue/<%=resource.resourceid%>/edit">Edit Resource</a>
+        </div>
+        <div class="card-body">
+            <form class="d-inline" action="/catalogue/<%=resource.resourceid%>?_method=DELETE" method="POST">
+                <button class="btn btn-danger">Delete Resource</button>
+            </form>
+        </div>
     </div>
-    <div class="card-body">
-        <a class="card-link btn btn-info" href="/catalogue">All Resources</a>
-        <a class="card-link btn btn-info" href="/catalogue/<%=resource.resourceid%>/edit">Edit Resource</a>
-    </div>
-    <div class="card-body">
-        <form class="d-inline" action="/catalogue/<%=resource.resourceid%>?_method=DELETE" method="POST">
-            <button class="btn btn-danger">Delete Resource</button>
-        </form>
-    </div>
-    
 </div>

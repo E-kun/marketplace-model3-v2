@@ -44,8 +44,6 @@ module.exports.catalogue = async (req, res) => {
 }
 
 module.exports.createResouce = async (req, res, next) => {
-    
-    console.log(date);
     console.log("Creating Resource");
     const resource = new Resource(req.body.resource);
     resource.image = req.files.image[0].location;

@@ -22,29 +22,11 @@ router.route('/profile')
     .get(isLoggedIn, users.renderProfilePage);
     // .get(users.renderProfilePage);
 
+router.route('/purchase-history')
+    .get(isLoggedIn, users.renderPurchaseHistory);
+
 router.route('/new-announcement')
     .get(isLoggedIn, users.renderAnnouncementPage);
     // .get(users.renderAnnouncementPage);
-
-router.route('/payment')
-    .get(users.renderPaymentForm);
-
-router.route('/config')
-    .get(users.getStripePubKey);
     
-router.route('/create-checkout-session')
-    .post(users.createCheckoutSession);
-
-router.route('/payment/complete')
-    .get(users.renderPaymentSuccessPage);
-
-router.route('/payment/failed')
-    .get(users.renderPaymentFailedPage);
-
-    // Expose a endpoint as a webhook handler for asynchronous events.
-    // Configure your webhook in the stripe developer dashboard
-    // https://dashboard.stripe.com/test/webhooks
-router.route('/webhook')
-    .post(users.sendToWebhook);
-
 module.exports = router;
