@@ -5,12 +5,13 @@
         <div class="col-12 d-flex flex-column align-items-center justify-content-start">
             <div class="d-flex flex-column align-items-center justify-content-start" >
                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZ2rbkECuMMDsi5Ayyrq_l33zwqmfZtfY-22Ok7W8&s" alt="">
+                <h3><%=userProfile.firstName%> <%=userProfile.lastName%></h3>
                 <div class="d-grid gap-3 my-5">
-                    <h5>Username: <%=username %></h5>
-                    <h5>First Name <% currentUser.firstName %></h5>
-                    <h5>Last Name <% currentUser.lastName %></h5>
-                    <h5>Location <% currentUser.location %></h5>
-                    <h5>Educational Institution <% currentUser.institution %></h5>
+                    <h5>Username: <%=userProfile.username%></h5>
+                    <h5>First Name: <%=userProfile.firstName%></h5>
+                    <h5>Last Name: <%=userProfile.lastName%></h5>
+                    <h5>Location: <%=userProfile.location%></h5>
+                    <h5>Educational Institution: <%=userProfile.institution%></h5>
                     <div class="mx-5 d-flex d-grid gap-3 flex-row align-items-center justify-content-center">
                         <a type="button" class="btn btn-primary" href="/new-announcement" >Create Announcement</a>
                         <a type="button" class="btn btn-primary" href="/edit-profile" >Edit Profile</a>

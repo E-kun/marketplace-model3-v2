@@ -24,15 +24,22 @@ module.exports.getStripePubKey = (req, res) => {
 module.exports.renderPaymentSuccessPage = async (req, res) => {
     const cart = new Cart(req.session.cart);
     const cartArray = cart.generateArray();
-    console.log(cartArray[0].price_data);
-    // const purchase = new Purchase();
-    // purchase.resourceID = cart.items.resourceID;
-    // purchase.name = cart.items.name;
-    // purchase.price = cart.items.price;
-    // purchase.file = cart.items.file;
-    // purchase.buyer = req.user._id;
+    console.log(cart);
+    if(!req.user){
+      console.log("User is not logged in")
+    } else{
+      console.log("User is logged in")
+      console.log(req.user)
+      // const purchase = new Purchase();
+      // purchase.resourceID = cart.items.resourceID;
+      // purchase.name = cart.items.name;
+      // purchase.price = cart.items.price;
+      // purchase.file = cart.items.file;
+      // purchase.buyer = req.user._id;
+      
+      // await purchase.save();
+    }
     
-    // await purchase.save();
     const purchases = [];
     
     totalPrice = cart.getTotalPrice();

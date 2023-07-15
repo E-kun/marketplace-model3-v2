@@ -8,10 +8,8 @@ const ResourceSchema = new Schema({
     description: String,
     subject: String,
     file: String,
-    author: {
-        type: Schema.Types.ObjectId,
-        ref: 'User'
-    },
+    // Author will be added separately from this schema and will be written to the Postgres DB.
+    // author: String, 
     // reviews: [
     //     {
     //         type: Schema.Types.ObjectId,

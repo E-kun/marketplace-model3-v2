@@ -11,6 +11,7 @@
                 <h3><%=resource.name%></h3>
                 <h3>Price: $<%=resource.price%></h3>
                 <h3>Subject: <%=resource.subject%></h3>
+                <h3>Author: <%=resource.author%></h3>
                 <h2>Description</h2>
                 <p><%=resource.description%></p>
                 <div class="card-body">
@@ -27,6 +28,7 @@
                 <h5 class="card-title">Update Title</h5>
                 <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo maxime voluptates accusamus facilis, atque expedita reprehenderit? Harum earum quam minus? Illo adipisci ab dolor porro, odit magni ratione quas nihil. </p>
             </div>
+        <% if(currentUser && resource.author === currentUser) {%>   
             <div class="card-body">
                 <a type="button" class="btn btn-primary" href="/edit-announcement">Edit Update</a>
                 <a type="button" class="btn btn-primary" href="/delete-announcement">Delete Update</a>
@@ -42,5 +44,6 @@
                 <button class="btn btn-danger">Delete Resource</button>
             </form>
         </div>
+        <% } %> 
     </div>
 </div>

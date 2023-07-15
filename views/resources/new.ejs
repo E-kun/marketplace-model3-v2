@@ -52,13 +52,13 @@
             
             <div class="mb-3">
                 <label class="form-label" for="subject">Subject</label>
-                <input class="form-control" type="text" id="subject" name="resource[subject]" required>
-                <div class="valid-feedback">
-                    This is a valid subject.
-                </div>
-                <div class="invalid-feedback">
-                    Subject invalid!
-                </div>
+                <select class="form-select" type="text" id="subject" name="resource[subject]" aria-label="Select a subject" required>
+                    <option selected>Select a subject</option>
+                    <option value="English">English</option>
+                    <option value="Maths">Maths</option>
+                    <option value="Science">Science</option>
+                    <option value="Chinese">Chinese</option>
+                </select>
             </div>
 
             <div class="mb-3">

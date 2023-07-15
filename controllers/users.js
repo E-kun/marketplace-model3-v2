@@ -12,8 +12,9 @@ module.exports.renderRegisterPage = (req, res) => {
 
 module.exports.createUser = async(req, res) => {
     try{
-        const {email, username, password} = req.body;
-        const user = new User({email, username});
+        const {username, email, password, firstName, lastName, location} = req.body;
+        console.log(req.body);
+        const user = new User({email, username, firstName, lastName, location});
         const registeredUser = await User.register(user, password);
         req.login(registeredUser, err => {
             if(err) return next(err);
@@ -33,14 +34,13 @@ module.exports.renderLoginPage = (req, res) => {
     res.render('users/login');
 }
 
-module.exports.renderProfilePage = (req, res) => {
-    const userProfile = req.session.passport
-    // res.send({userProfile})
-    res.render('users/profile', {username: userProfile.user});
+module.exports.renderProfilePage = async (req, res) => {
+    const user = req.session.passport;
+    const userProfile = await User.findOne({ username: user.user });
+    res.render('users/profile', { userProfile });
 }
 
 module.exports.renderPurchaseHistory = (req, res) => {
-    // res.send({userProfile})
     res.render('users/purchases');
 }
 

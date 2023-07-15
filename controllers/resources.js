@@ -49,13 +49,11 @@ module.exports.createResouce = async (req, res, next) => {
     resource.image = req.files.image[0].location;
     resource.file = req.files.material[0].location;
     const id = resource._id.valueOf();
+    const author = req.session.passport.user;
     const client = await pgPool.connect();
-    const query = `INSERT INTO Resources(resourceid, name, image, price, description, subject) VALUES('${id}', '${resource.name}', '${resource.image}', ${resource.price}, '${resource.description}', '${resource.subject}');`;
+    const query = `INSERT INTO Resources(resourceid, name, image, price, description, subject, file, author) VALUES('${id}', '${resource.name}', '${resource.image}', ${resource.price}, '${resource.description}', '${resource.subject}', '${resource.file}' , '${author}');`;
 
     try{
-        // console.log(req.files.image[0].location);
-        // console.log(req.files.material[0].location);
-        
         await client.query(query, (err, result) => {
             if (err) {
               throw err
@@ -96,6 +94,14 @@ module.exports.showResource = async (req, res) => {
             }
             resource = result.rows[0];
 
+            // res.send(req.session.passport)
+            // if(!req.session.passport){
+            //     const currentUser = { user: "" };
+            // } else{
+            //     const currentUser = req.session.passport.user;
+            // }
+            // console.log(currentUser);
+            // res.render('resources/resource', { resource, currentUser, msg: req.flash("success") });
             res.render('resources/resource', { resource, msg: req.flash("success") });
         });
         // console.log(resource.file);
