@@ -3,6 +3,7 @@ dotenv.config();
 const Cart = require('../models/cart');
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const Purchase = require('../models/purchase')
+const url = process.env.WEBAPPURL;
 
 module.exports.renderPaymentForm = (req, res, next) => {
     const cart = new Cart(req.session.cart);
@@ -99,8 +100,8 @@ module.exports.createCheckoutSession = async (req, res) => {
         },
         line_items: stripeCart,
         mode: 'payment',
-        success_url: 'http://localhost:3180/checkout/payment/complete',
-        cancel_url: 'http://localhost:3180/checkout/payment/failed',
+        success_url: `${url}/checkout/payment/complete`,
+        cancel_url: `${url}/checkout/payment/failed`,
       });
 
     res.redirect(303, session.url);
