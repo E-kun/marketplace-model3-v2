@@ -6,7 +6,8 @@ const PurchaseSchema = new Schema({
     name: String,
     price: Number,
     file: String,
-    buyer: String
+    buyer: String,
+    purchaseDate: String
 });
 
 module.exports = mongoose.model('Purchase', PurchaseSchema);

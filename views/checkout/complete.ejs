@@ -36,6 +36,20 @@
                     <div class="col align-self-end">
                         <strong>Total: $<%=totalPrice%></strong>
                     </div>
+
+                    <% if(!currentUser) {%>
+                        <div class="card mb-3 mx-auto col-8">
+                            <p>The link to your files are as follows: </p>
+                            <% for(let resource of resources){ %>
+                                <li class="list-group-item d-flex justify-content-evenly">
+                                    <strong><%=resource.price_data.product_data.name%></strong>
+                                    <a class="btn btn-primary" href=<%=resource.file%>>Download</a>
+                                </li>
+                            <% } %> 
+                        </div>
+                    <% } else { %>
+                        <p>Your downloads are in your account's purchase history. Please go there to download your new files.</p>
+                    <% } %>
                 </div>
                 
             </div>

@@ -1,6 +1,7 @@
 const dotenv = require("dotenv");
 dotenv.config();
 const User = require('../models/user');
+const Purchase = require('../models/purchase');
 
 module.exports.renderAboutPage = (req, res) => {
     res.render('about');
@@ -13,7 +14,6 @@ module.exports.renderRegisterPage = (req, res) => {
 module.exports.createUser = async(req, res) => {
     try{
         const {username, email, password, firstName, lastName, location} = req.body;
-        console.log(req.body);
         const user = new User({email, username, firstName, lastName, location});
         const registeredUser = await User.register(user, password);
         req.login(registeredUser, err => {
@@ -25,9 +25,6 @@ module.exports.createUser = async(req, res) => {
         req.flash('error', err.message);
         res.redirect('register');
     }
-    //Authentication setup required here. Flashing for testing purposes first.
-    // req.flash('success', 'User created.');
-    // res.redirect('/catalogue');
 }
 
 module.exports.renderLoginPage = (req, res) => {
@@ -40,8 +37,11 @@ module.exports.renderProfilePage = async (req, res) => {
     res.render('users/profile', { userProfile });
 }
 
-module.exports.renderPurchaseHistory = (req, res) => {
-    res.render('users/purchases');
+module.exports.renderPurchaseHistory = async (req, res) => {
+    const user = req.session.passport;
+    const purchases = await Purchase.find({ buyer: user.user });
+
+    res.render('users/purchases', { purchases });
 }
 
 module.exports.login = (req, res) => {

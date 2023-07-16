@@ -24,26 +24,28 @@ module.exports.getStripePubKey = (req, res) => {
 module.exports.renderPaymentSuccessPage = async (req, res) => {
     const cart = new Cart(req.session.cart);
     const cartArray = cart.generateArray();
-    console.log(cart);
-    if(!req.user){
-      console.log("User is not logged in")
-    } else{
-      console.log("User is logged in")
-      console.log(req.user)
-      // const purchase = new Purchase();
-      // purchase.resourceID = cart.items.resourceID;
-      // purchase.name = cart.items.name;
-      // purchase.price = cart.items.price;
-      // purchase.file = cart.items.file;
-      // purchase.buyer = req.user._id;
-      
-      // await purchase.save();
+    let date = new Date();
+    let current_datetime = date.getHours()+":"+date.getMinutes() + " " + date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear();
+
+    for(let item of cartArray ){
+      const purchase = new Purchase();
+      purchase.resourceID = item.resourceID;
+      purchase.name = item.price_data.product_data.name;
+      purchase.price = item.price_data.unit_amount/100;
+      purchase.purchaseDate = current_datetime;
+      purchase.file = item.file;
+      if(!req.user){
+        purchase.buyer = "Guest"
+      } else{
+        purchase.buyer = req.user.username;
+      }
+
+      await purchase.save();
     }
-    
-    const purchases = [];
     
     totalPrice = cart.getTotalPrice();
     req.session.cart = null;
+    req.session.stripeCart = null;
     res.render('checkout/complete', {resources: cartArray, totalPrice});
 }
 
@@ -90,16 +92,16 @@ module.exports.sendToWebhook = async (req, res) => {
   }
 
 module.exports.createCheckoutSession = async (req, res) => {
-    const cart = new Cart(req.session.cart);
-    const cartArray = cart.generateArray();
+    const stripeCart = req.session.stripeCart;
     const session = await stripe.checkout.sessions.create({
         invoice_creation: {
           enabled: true,
         },
-        line_items: cartArray,
+        line_items: stripeCart,
         mode: 'payment',
         success_url: 'http://localhost:3180/checkout/payment/complete',
         cancel_url: 'http://localhost:3180/checkout/payment/failed',
       });
+
     res.redirect(303, session.url);
 }

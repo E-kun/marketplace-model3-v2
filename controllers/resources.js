@@ -1,6 +1,17 @@
 const Resource = require('../models/resource');
 const date = new Date();
 const { pgPool } = require('../utils/db-connect');
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+
+function addProductToStripe(resource, id) {
+    stripe.products.create({
+        id: id,
+        name: resource.name,
+        description: resource.description,
+        images: [resource.image],
+      });
+}
+
 
 module.exports.catalogue = async (req, res) => {
     const { subject } = req.query;
@@ -50,6 +61,7 @@ module.exports.createResouce = async (req, res, next) => {
     const query = `INSERT INTO Resources(resourceid, name, image, price, description, subject, file, author) VALUES('${id}', '${resource.name}', '${resource.image}', ${resource.price}, '${resource.description}', '${resource.subject}', '${resource.file}' , '${author}');`;
 
     try{
+        await addProductToStripe(resource, id);
         await client.query(query, (err, result) => {
             if (err) {
               throw err
