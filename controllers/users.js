@@ -45,23 +45,23 @@ module.exports.renderPurchaseHistory = async (req, res) => {
 }
 
 module.exports.login = (req, res) => {
-  req.flash('success', 'Welcome back!');
-  const redirectUrl = req.session.returnTo || '/catalogue';
-  // const redirectUrl = req.session.returnTo;
-  delete req.session.returnTo;
-  res.redirect(redirectUrl);
+    req.flash('success', 'Welcome back!');
+    const redirectUrl = req.session.returnTo || '/catalogue';
+    // const redirectUrl = req.session.returnTo;
+    delete req.session.returnTo;
+    res.redirect(redirectUrl);
 }
 
 module.exports.logout = (req, res, next) => {
-  req.logout(req.user, err => {
-      if(err) {
-          return next(err);
-      }
-      req.flash('success', "Logout successful.");
-      res.redirect('/catalogue')
-  })
+    req.logout(req.user, err => {
+        if(err) {
+            return next(err);
+        }
+        req.flash('success', "Logout successful.");
+        res.redirect('/catalogue')
+    })
 }
 
 module.exports.renderAnnouncementPage = (req, res) => {
-  res.render('users/announcements');
+    res.render('users/announcements');
 }

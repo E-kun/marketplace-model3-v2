@@ -28,21 +28,27 @@ module.exports.renderPaymentSuccessPage = async (req, res) => {
     let date = new Date();
     let current_datetime = date.getHours()+":"+date.getMinutes() + " " + date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear();
 
-    for(let item of cartArray ){
-      const purchase = new Purchase();
-      purchase.resourceID = item.resourceID;
-      purchase.name = item.price_data.product_data.name;
-      purchase.price = item.price_data.unit_amount/100;
-      purchase.purchaseDate = current_datetime;
-      purchase.file = item.file;
-      if(!req.user){
-        purchase.buyer = "Guest"
-      } else{
-        purchase.buyer = req.user.username;
+    try{
+      for(let item of cartArray ){
+        const purchase = new Purchase();
+        purchase.resourceID = item.resourceID;
+        purchase.name = item.price_data.product_data.name;
+        purchase.price = item.price_data.unit_amount/100;
+        purchase.purchaseDate = current_datetime;
+        purchase.file = item.file;
+        if(!req.user){
+          purchase.buyer = "Guest"
+        } else{
+          purchase.buyer = req.user.username;
+        }
+  
+        await purchase.save();
       }
-
-      await purchase.save();
+    } catch (err) {
+        console.log(`Failure detected`);
+        return res.sendStatus(400);
     }
+    
     
     totalPrice = cart.getTotalPrice();
     req.session.cart = null;
@@ -94,7 +100,9 @@ module.exports.sendToWebhook = async (req, res) => {
 
 module.exports.createCheckoutSession = async (req, res) => {
     const stripeCart = req.session.stripeCart;
-    const session = await stripe.checkout.sessions.create({
+    console.log(url);
+    try{
+      const session = await stripe.checkout.sessions.create({
         invoice_creation: {
           enabled: true,
         },
@@ -104,5 +112,10 @@ module.exports.createCheckoutSession = async (req, res) => {
         cancel_url: `${url}/checkout/payment/failed`,
       });
 
-    res.redirect(303, session.url);
+      res.redirect(303, session.url);
+    } catch(err){
+      console.log(err);
+      req.flash('error', 'An error has occurred. Unable to create checkout session.');
+      res.redirect('/catalogue');
+    }  
 }
