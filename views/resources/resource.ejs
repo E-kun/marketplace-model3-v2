@@ -28,7 +28,7 @@
                 <h5 class="card-title">Update Title</h5>
                 <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo maxime voluptates accusamus facilis, atque expedita reprehenderit? Harum earum quam minus? Illo adipisci ab dolor porro, odit magni ratione quas nihil. </p>
             </div>
-        <% if(currentUser && resource.author === currentUser) {%>   
+        <% if(currentUser && resource.author == currentUser.username) {%>   
             <div class="card-body">
                 <a type="button" class="btn btn-primary" href="/edit-announcement">Edit Update</a>
                 <a type="button" class="btn btn-primary" href="/delete-announcement">Delete Update</a>

@@ -18,9 +18,6 @@ module.exports.catalogue = async (req, res) => {
                 resources = result.rows;
                 res.render('resources/catalogue', { resources, subject });
             });
-            // Don't return query result or the page load will slow down.
-            // const resources = await Resource.find({ subject })
-            // res.render('resources/catalogue', { resources, subject });
         } else{
             const query = "SELECT * FROM Resources;"
             await client.query(query, (err, result) => {
@@ -32,7 +29,6 @@ module.exports.catalogue = async (req, res) => {
                 res.render('resources/catalogue', { resources, subject: 'All' });
             });
 
-            // const resources = await Resource.find({})
         }
     } catch(err){
         console.log(err);
@@ -82,30 +78,24 @@ module.exports.renderNewForm = (req, res) => {
 module.exports.showResource = async (req, res) => {
     const { id } = req.params;
     const client = await pgPool.connect();
-    const values = [id];
-
-    // console.log(values);
 
     try{
-        const query = "SELECT * FROM Resources WHERE resourceid=$1;"
-        await client.query(query, values, (err, result) => {
-            if (err) {
-                throw err
-            }
-            resource = result.rows[0];
+        const result = await client.query({
+            rowMode: "array",
+            text: `SELECT * FROM Resources WHERE resourceid='${id}';`
+        })
 
-            // res.send(req.session.passport)
-            // if(!req.session.passport){
-            //     const currentUser = { user: "" };
-            // } else{
-            //     const currentUser = req.session.passport.user;
-            // }
-            // console.log(currentUser);
-            // res.render('resources/resource', { resource, currentUser, msg: req.flash("success") });
-            res.render('resources/resource', { resource, msg: req.flash("success") });
-        });
-        // console.log(resource.file);
+        const resource = {
+            name: result.rows[0][1],
+            price: result.rows[0][2],
+            description: result.rows[0][3],
+            subject: result.rows[0][4],
+            image: result.rows[0][5],
+            author: result.rows[0][7]
+        }
         
+        res.render('resources/resource', { resource, msg: req.flash("success") });
+
     } catch(err){
         console.log(err);
         req.flash('error', 'An error has occurred. Unable to locate resource.');
@@ -177,12 +167,10 @@ module.exports.renderEditForm = async (req, res) => {
         const query = "SELECT * FROM Resources WHERE resourceid=$1;"
         await client.query(query, values, (err, result) => {
             if (err) {
-                // console.log(query);
                 throw err
             }
             const resource = result.rows[0];
 
-            // console.log(resource);
             res.render('resources/edit', { resource });
             
             if (!resource) {
@@ -190,7 +178,6 @@ module.exports.renderEditForm = async (req, res) => {
                 return res.redirect('/catalogue');
             }
         });
-        // const resource = await Resource.findById(id);
         res.render('resources/edit', { resource });
     } catch (err){
         console.log(err);
