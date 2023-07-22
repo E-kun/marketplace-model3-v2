@@ -2,6 +2,8 @@ const Resource = require('../models/resource');
 const date = new Date();
 const { pgPool } = require('../utils/db-connect');
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const { s3client } = require('../aws');
+const { DeleteObjectCommand } = require("@aws-sdk/client-s3");
 
 function addProductToStripe(resource, id) {
     stripe.products.create({
@@ -12,12 +14,57 @@ function addProductToStripe(resource, id) {
       });
 }
 
+function deleteFromAWSS3Bucket(image, file) {
+    const deleteImageObject = {
+        Bucket: "mercatus-test", // required
+        Key: image, // required
+    };
+
+    const deleteFileObject = {
+        Bucket: "mercatus-test", // required
+        Key: file, // required
+    };
+
+    const imageDeleteCommand = new DeleteObjectCommand(deleteImageObject);
+    const fileDeleteCommand = new DeleteObjectCommand(deleteFileObject);
+    const imageDeleteResponse = s3client.send(imageDeleteCommand);
+    const fileDeleteResponse = s3client.send(fileDeleteCommand);
+
+    const finalResponse = {
+        imageResponse: imageDeleteResponse,
+        fileResponse: fileDeleteResponse,
+    }
+
+    return finalResponse;
+}
 
 module.exports.catalogue = async (req, res) => {
-    const { subject } = req.query;
+    // const { subject } = req.query;
+    const { subject, level } = req.query;
     const client = await pgPool.connect();
     try {
-        const values = [subject];
+        const values = [subject, level];
+
+        // if(level){
+        //     res.send(level);
+        // } else if(subject){
+        //     res.send(subject);
+        // } else 
+        // if(level && subject){
+        //     res.send(`${level} and ${subject}` )
+        // } else if(subject){ 
+
+        // } else{
+        //     const query = "SELECT * FROM Resources;"
+        //     await client.query(query, (err, result) => {
+        //         if (err) {
+        //           throw err
+        //         }
+
+        //         resources = result.rows;
+        //         res.render('resources/catalogue', { resources, subject: 'All' });
+        //     });
+        // }
 
         if(subject){
             const query = "SELECT * FROM Resources WHERE subject=$1;"
@@ -98,6 +145,7 @@ module.exports.showResource = async (req, res) => {
         })
 
         const resource = {
+            resourceid: id,
             name: result.rows[0][1],
             price: result.rows[0][2],
             description: result.rows[0][3],
@@ -149,7 +197,21 @@ module.exports.deleteResource = async (req, res) => {
     const values = [id];
 
     try{
+        const result = await client.query({
+            rowMode: "array",
+            text: `SELECT image,file FROM Resources WHERE resourceid='${id}';`
+        })
+
+        const image = result.rows[0][0];
+        const file  = result.rows[0][1];
+        imageKey = image.replace("https://mercatus-test.s3.ap-southeast-1.amazonaws.com/", "")
+        fileKey = file.replaceAll("https://mercatus-test.s3.ap-southeast-1.amazonaws.com/", "").replaceAll(/%20/g, " ");
+        deleteResponse = await deleteFromAWSS3Bucket(imageKey, fileKey);
+
+        console.log(deleteResponse);
+        
         const query = "DELETE FROM resources WHERE resourceid=$1;"
+
         await client.query(query, values, (err, result) => {
             if (err) {
                 throw err
@@ -190,7 +252,7 @@ module.exports.renderEditForm = async (req, res) => {
                 return res.redirect('/catalogue');
             }
         });
-        res.render('resources/edit', { resource });
+        // res.render('resources/edit', { resource });
     } catch (err){
         console.log(err);
         res.redirect('/catalogue');

@@ -10,6 +10,9 @@ const s3 = new S3Client({
     region: "ap-southeast-1"
 });
 
+const s3client = s3;
+module.exports.s3client = s3client;
+
 const storage = multer({
     storage: multerS3({
       s3: s3,
@@ -26,4 +29,4 @@ const storage = multer({
   })
 
 
-module.exports = storage;
+module.exports.storage = storage;
