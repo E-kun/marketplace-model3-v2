@@ -1,20 +1,27 @@
 <% layout('layouts/boilerplate')%>
 <h2 class="d-flex justify-content-center">Create a New Resource</h2>
 <div class="row">
-    <div class="col-6 mx-auto mb-4">
-        
-        <form action="/catalogue" method="POST" class="validated-form" novalidate enctype="multipart/form-data">
-            <div class="mb-3">
-                <label class="form-label" for="name">Resource Name</label>
-                <input class="form-control" type="text" id="name" name="resource[name]" required>
-                <div class="valid-feedback">
-                    Name is valid!
-                </div>
-                <div class="invalid-feedback">
-                    Name is not valid.
-                </div>
-            </div>
-            <!-- <div class="mb-3">
+  <div class="col-6 mx-auto mb-4">
+    <form
+      action="/catalogue"
+      method="POST"
+      class="validated-form"
+      novalidate
+      enctype="multipart/form-data"
+    >
+      <div class="mb-3">
+        <label class="form-label" for="name">Resource Name</label>
+        <input
+          class="form-control"
+          type="text"
+          id="name"
+          name="resource[name]"
+          required
+        />
+        <div class="valid-feedback">Name is valid!</div>
+        <div class="invalid-feedback">Name is not valid.</div>
+      </div>
+      <!-- <div class="mb-3">
                 <label class="form-label" for="image">Image URL</label>
                 <input class="form-control" type="text" id="image" name="resource[image]" required>
                 <div class="valid-feedback">
@@ -24,72 +31,107 @@
                     Please include an image URL for this listing.
                 </div>
             </div> -->
-            <div class="mb-3">
-                <label class="form-label" for="image">Upload Image</label>
-                <br>
-                <input type="file" name="image" id="" multiple>
-            </div>
-            <div class="mb-3">
-                <label class="form-label" for="material">Upload Material</label>
-                <br>
-                <input type="file" name="material" id="" single>
-            </div>
+      <div class="mb-3">
+        <label class="form-label" for="image">Upload Image</label>
+        <br />
+        <input type="file" name="image" id="" multiple />
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="material">Upload Material</label>
+        <br />
+        <input type="file" name="material" id="" single />
+      </div>
 
-            <div class="mb-3">
-                <label class="form-label" for="price">Resource Price</label>
-                <div class="input-group">
-                    <span class="input-group-text" id="basic-addon1">$</span>
-                    <input type="text" class="form-control" id="price" placeholder="0.00" aria-label="Price" aria-describedby="price-label" name="resource[price]" required>
-                    <div class="valid-feedback">
-                        This is a valid price.
-                    </div>
-                    <div class="invalid-feedback">
-                        Price is invalid. Please add a value greater than 0.
-                    </div>
-                </div>
-                
-            </div>
-            
-            <div class="mb-3">
-                <label class="form-label" for="subject">Subject</label>
-                <select class="form-select" type="text" id="subject" name="resource[subject]" aria-label="Select a subject" required>
-                    <option selected>Select a subject</option>
-                    <option value="English">English</option>
-                    <option value="Maths">Maths</option>
-                    <option value="Science">Science</option>
-                    <option value="Chinese">Chinese</option>
-                </select>
-            </div>
+      <div class="mb-3">
+        <label class="form-label" for="price">Resource Price</label>
+        <div class="input-group">
+          <span class="input-group-text" id="basic-addon1">$</span>
+          <input
+            type="text"
+            class="form-control"
+            id="price"
+            placeholder="0.00"
+            aria-label="Price"
+            aria-describedby="price-label"
+            name="resource[price]"
+            required
+          />
+          <div class="valid-feedback">This is a valid price.</div>
+          <div class="invalid-feedback">
+            Price is invalid. Please add a value greater than 0.
+          </div>
+        </div>
+      </div>
 
-            <div class="mb-3">
-                <label class="form-label" for="description">Description</label>
-                <textarea class="form-control" type="text" id="description" name="resource[description]" required></textarea>
-                <div class="valid-feedback">
-                    Description is valid.
-                </div>
-                <div class="invalid-feedback">
-                    Please add a description for this listing.
-                </div>
-            </div>
+      <div class="mb-3">
+        <label class="form-label" for="subject">Subject</label>
+        <select
+          class="form-select"
+          type="text"
+          id="subject"
+          name="resource[subject]"
+          aria-label="Select a subject"
+          required
+        >
+          <option selected>Select a subject</option>
+          <option value="English">English</option>
+          <option value="Maths">Maths</option>
+          <option value="Science">Science</option>
+          <option value="Chinese">Chinese</option>
+          <option value="Malay">Malay</option>
+          <option value="Tamil">Tamil</option>
+          <option value="Literature in English">Literature in English</option>
+          <option value="History">History</option>
+          <option value="Geography">Geography</option>
+          <option value="Humanities">Humanities</option>
+          <option value="Economics">Economics</option>
+          <option value="Drama">Drama</option>
+          <option value="Art">Art</option>
+          <option value="Design & Technology">Design & Technology</option>
+          <option value="Computing">Computing</option>
+        </select>
+      </div>
 
-            <div class="mb-3">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" required>
-                    <label class="form-check-label" for="flexCheckDefault">
-                        I acknowledge that this resource has not been plagiarised in any way, shape or form and I am able to prove this in the event that my material is reviewed.
-                    </label>
-                    <div class="invalid-feedback">
-                        You are required to tick this box to continue with the creation of this resource.
-                    </div>
-                </div>
-            </div>
-            
-            <div class="mb-3">
-                <button class="btn btn-success">Create Resource</button>
-            </div>
-            
-        </form>
-        <a href="/catalogue">Catalogue</a>
-    </div>
+      <div class="mb-3">
+        <label class="form-label" for="description">Description</label>
+        <textarea
+          class="form-control"
+          type="text"
+          id="description"
+          name="resource[description]"
+          required
+        ></textarea>
+        <div class="valid-feedback">Description is valid.</div>
+        <div class="invalid-feedback">
+          Please add a description for this listing.
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            value=""
+            id="flexCheckDefault"
+            required
+          />
+          <label class="form-check-label" for="flexCheckDefault">
+            I acknowledge that this resource has not been plagiarised in any
+            way, shape or form and I am able to prove this in the event that my
+            material is reviewed.
+          </label>
+          <div class="invalid-feedback">
+            You are required to tick this box to continue with the creation of
+            this resource.
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <button class="btn btn-success">Create Resource</button>
+      </div>
+    </form>
+    <a href="/catalogue">Catalogue</a>
+  </div>
 </div>
-
